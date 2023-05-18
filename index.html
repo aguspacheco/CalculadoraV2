@@ -1,0 +1,77 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="/calculadora.js"></script>
+  </head>
+  <body>
+    <div class="contenedor container" id="contenedor">
+      <form class="formulario" id="formulario">
+        <div class="elemento">
+          <label for="origen">Parcelas origen *</label>
+          <input type="number" id="origen" min="0" tabindex="4" required />
+          <span id="mensaje-advertencia"></span>
+        </div>
+
+        <div class="elemento">
+          <label for="resultante">Parcelas resultante *</label>
+          <input type="number" id="resultante" min="0" tabindex="5" required />
+        </div>
+
+        <div class="elemento">
+          <label for="ufuncional">Unidad Funcional</label>
+          <input type="number" id="ufuncional" min="0" tabindex="6" required />
+        </div>
+
+        <div class="elemento">
+          <label for="ddjj">Declaracion jurada</label>
+          <input type="number" id="ddjj" min="0" tabindex="7" required />
+        </div>
+
+        <div class="elemento">
+          <label for="preferencial">Preferencial</label>
+          <input type="checkbox" id="preferencial" tabindex="8" />
+        </div>
+
+        <div>
+          <button class="calcular-btn btn" id="calcular-btn" type="button">
+            Calcular
+          </button>
+
+          <button class="limpiar-btn btn" id="limpiar-btn" type="button">
+            Limpiar
+          </button>
+        </div>
+      </form>
+
+      <div class="container-resultados" id="container-resultados">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Datos</th>
+              <th>Cantidad</th>
+              <th>Valor</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody class="resultados" id="resultados"></tbody>
+        </table>
+        <div class="total" id="total">
+          <label for="resultado">Total Abonar:</label>
+          <div id="resultado"></div>
+        </div>
+        <div>
+          <button class="recalcular-btn btn" id="recalcular-btn" type="button">
+            Recalcular
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      type="text/javascript"
+      src="/wp-content/themes/fashify/assets/js/calculadora.js"
+    ></script>
+  </body>
+</html>

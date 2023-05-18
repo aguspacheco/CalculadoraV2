@@ -1,0 +1,47 @@
+.btn {
+  width: 150px;
+}
+
+.elemento {
+  padding-bottom: 5px;
+}
+
+.elemento input[type="checkbox"] {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+}
+
+input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+}
+
+input[type="number"] {
+  padding-left: 10px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-around;
+  background-color: #bcbcbc;
+  margin-bottom: 5px;
+}
+
+td {
+  text-align: center;
+}
+
+.container-resultados {
+  display: none;
+}
+
+.texto-izquierda {
+  text-align: left;
+}
