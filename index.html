@@ -7,46 +7,49 @@
     <script defer src="/calculadora.js"></script>
   </head>
   <body>
-    <div class="contenedor container" id="contenedor">
-      <form class="formulario" id="formulario">
+    <section class="mensura">
+      <form class="formulario" id="formularioMensura">
         <div class="elemento">
           <label for="origen">Parcelas origen *</label>
-          <input type="number" id="origen" min="0" tabindex="4" required />
+          <input type="number" id="origen" min="0" required />
           <span id="mensaje-advertencia"></span>
         </div>
 
         <div class="elemento">
           <label for="resultante">Parcelas resultante *</label>
-          <input type="number" id="resultante" min="0" tabindex="5" required />
+          <input type="number" id="resultante" min="0" required />
         </div>
 
         <div class="elemento">
           <label for="ufuncional">Unidad Funcional</label>
-          <input type="number" id="ufuncional" min="0" tabindex="6" required />
+          <input type="number" id="ufuncional" min="0" required />
         </div>
 
         <div class="elemento">
           <label for="ddjj">Declaracion jurada</label>
-          <input type="number" id="ddjj" min="0" tabindex="7" required />
+          <input type="number" id="ddjj" min="0" required />
         </div>
 
         <div class="elemento">
           <label for="preferencial">Preferencial</label>
-          <input type="checkbox" id="preferencial" tabindex="8" />
+          <input type="checkbox" id="preferencialMensura" />
         </div>
 
         <div>
-          <button class="calcular-btn btn" id="calcular-btn" type="button">
+          <button
+            class="calcular-btn btn"
+            id="calcular-btnMensura"
+            type="button"
+          >
             Calcular
           </button>
 
-          <button class="limpiar-btn btn" id="limpiar-btn" type="button">
+          <button class="limpiar-btn btn" id="limpiar-btnMensura" type="button">
             Limpiar
           </button>
         </div>
       </form>
-
-      <div class="container-resultados" id="container-resultados">
+      <div class="container-resultados" id="container-resultadosMensura">
         <table class="tabla">
           <thead>
             <tr>
@@ -56,22 +59,134 @@
               <th>Total</th>
             </tr>
           </thead>
-          <tbody class="resultados" id="resultados"></tbody>
+          <tbody class="resultados" id="resultadosMensura"></tbody>
         </table>
-        <div class="total" id="total">
+        <div class="total" id="totalMensura">
           <label for="resultado">Total Abonar:</label>
           <div id="resultado"></div>
         </div>
         <div>
-          <button class="recalcular-btn btn" id="recalcular-btn" type="button">
+          <button
+            class="recalcular-btn btn"
+            id="recalcular-btnMensura"
+            type="button"
+          >
             Recalcular
           </button>
         </div>
       </div>
-    </div>
-    <script
-      type="text/javascript"
-      src="/wp-content/themes/fashify/assets/js/calculadora.js"
-    ></script>
+    </section>
+    <section class="valuaciones">
+      <form class="formulario" id="formularioValuaciones">
+        <div class="elemento">
+          <label for="declaracionesJuradas">Declaraciones Juradas *</label>
+          <input
+            type="number"
+            id="declaracionesJuradas"
+            min="0"
+            placeholder="Ingrese un número"
+            required
+          />
+        </div>
+
+        <div class="elemento">
+          <label for="valoresFiscales"> Certificado Valores Fiscales*</label>
+          <input
+            type="number"
+            id="valoresFiscales"
+            min="0"
+            placeholder="Ingrese un número"
+            required
+          />
+        </div>
+
+        <div class="elemento">
+          <label for="pedidoValoresFiscales">
+            Reconsideración Valores Fiscales*</label
+          >
+          <input
+            type="number"
+            id="pedidoValoresFiscales"
+            min="0"
+            placeholder="Ingrese un número"
+            required
+          />
+        </div>
+
+        <div class="elemento">
+          <label for="ganadera">
+            Reconsideración De Receptividad Ganadera
+          </label>
+          <input
+            type="number"
+            id="ganadera"
+            min="0"
+            placeholder="Ingrese un número"
+            required
+          />
+        </div>
+
+        <div class="elemento">
+          <label for="vir"> Reconsideración de VIR </label>
+          <input
+            type="number"
+            id="vir"
+            min="0"
+            placeholder="Ingrese un número"
+            required
+          />
+        </div>
+
+        <div class="elemento">
+          <label for="preferencial_valuaciones"> Preferencial </label>
+          <input type="checkbox" id="preferencialValuaciones" />
+        </div>
+
+        <div>
+          <button
+            class="calcular-btn btn"
+            id="calcularBtn-valuaciones"
+            type="button"
+          >
+            Calcular
+          </button>
+
+          <button
+            class="limpiar-btn btn"
+            id="limpiarBtn-valuaciones"
+            type="button"
+          >
+            Limpiar
+          </button>
+        </div>
+      </form>
+
+      <div class="container-resultados" id="containerResultados_valuaciones">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Datos</th>
+              <th>Cantidad</th>
+              <th>Valor</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody class="resultados" id="resultadosValuaciones"></tbody>
+        </table>
+        <div class="total">
+          <label for="abonarValuaciones"> Total a Abonar:</label>
+          <div id="abonarValuaciones"></div>
+        </div>
+        <div>
+          <button
+            class="recalcular-btn btn"
+            id="recalcularBtn-valuaciones"
+            type="button"
+          >
+            Recalcular
+          </button>
+        </div>
+      </div>
+    </section>
   </body>
 </html>
