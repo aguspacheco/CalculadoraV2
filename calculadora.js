@@ -17,18 +17,14 @@ const valor_modulo_valor_fiscal = 600 * multiplicador;
 const valor_modulo_valuacion_fiscal = 500 * multiplicador;
 const valor_modulo_ganadera = 500 * multiplicador;
 
-/*Defino constantes de mensrua */
+/*Defino constantes de mensura */
 const formularioMensura = document.getElementById("formularioMensura");
 const resultadosMensura = document.getElementById("resultadosMensura");
-const container_resultadosMensura = document.getElementById(
-  "container-resultadosMensura"
-);
+const tablaResultadosMensura = document.getElementById("tablaMensura");
 
 const formularioValuaciones = document.getElementById("formularioValuaciones");
 const resultadosValuaciones = document.getElementById("resultadosValuaciones");
-const container_resultadosValuaciones = document.getElementById(
-  "containerResultados_Valuaciones"
-);
+const tablaValuaciones = document.getElementById("tablaValuaciones");
 
 /*Funciones Globales */
 
@@ -71,7 +67,7 @@ function agregarFila(etiqueta, cantidad, valorModular, tabla) {
     <td>${formatoMoneda(valorModular)}</td>
     <td>${formatoMoneda(valorModular * cantidad)}</td>
   `;
-  resultados.appendChild(fila);
+  tabla.appendChild(fila);
 }
 
 function agregarFilaPreferencial(preferencial, monto, tabla) {
@@ -82,7 +78,7 @@ function agregarFilaPreferencial(preferencial, monto, tabla) {
     <td>${preferencial ? porc_preferencial : 0}%</td>
     <td>${formatoMoneda(monto)}</td>
   `;
-  resultados.appendChild(fila);
+  tabla.appendChild(fila);
 }
 
 /* Seccion Mensura */
@@ -109,7 +105,7 @@ function obtenerValoresEntrada() {
   const resultante = parseInt(document.getElementById("resultante").value) || 0;
   const ddjj = parseInt(document.getElementById("ddjj").value) || 0;
   const funcional = parseInt(document.getElementById("ufuncional").value) || 0;
-  const preferencial = document.getElementById("preferencial").checked;
+  const preferencial = document.getElementById("preferencialMensura").checked;
   const parcelas = origen + resultante;
 
   return { origen, resultante, ddjj, funcional, preferencial, parcelas };
@@ -145,33 +141,53 @@ function crearTablaResultados(valoresEntrada) {
     valoresEntrada;
   const valor_modulo_parcelas = parcelasValorModular(parcelas);
 
-  agregarFila("Parcelas Origen", origen, valor_modulo_parcelas);
-  agregarFila("Parcelas Resultante", resultante, valor_modulo_parcelas);
-  agregarFila("Unidad Funcional", funcional, valor_modulo_ufuncional);
-  agregarFila("Declaracion Jurada", ddjj, valor_modulo_ddjj);
+  agregarFila(
+    "Parcelas Origen",
+    origen,
+    valor_modulo_parcelas,
+    resultadosMensura
+  );
+  agregarFila(
+    "Parcelas Resultante",
+    resultante,
+    valor_modulo_parcelas,
+    resultadosMensura
+  );
+  agregarFila(
+    "Unidad Funcional",
+    funcional,
+    valor_modulo_ufuncional,
+    resultadosMensura
+  );
+  agregarFila("Declaracion Jurada", ddjj, valor_modulo_ddjj, resultadosMensura);
 
   const montoPreferencial = preferencial
     ? totalPreferencial(parcelas, ddjj, funcional)
     : 0;
 
-  agregarFilaPreferencial(preferencial, montoPreferencial);
+  agregarFilaPreferencial(preferencial, montoPreferencial, resultadosMensura);
 }
 
 function mostrarTotalMensura() {
   const valoresEntrada = obtenerValoresEntrada();
   const total = calcularTotal(valoresEntrada);
   crearTablaResultados(valoresEntrada);
-  visualizarTotal(total, "pagarMensura");
+  visualizarTotal(total, "abonarMensura");
 }
 
-/* Botones de mensura */
+/* Botón de calcular */
 
 const calcularBtnMensura = document.getElementById("calcular-btnMensura");
 calcularBtnMensura.addEventListener("click", () => {
   formularioMensura.style.display = "none";
-  container_resultadosMensura.style.display = "block";
+  limpiarBtnMensura.style.display = "none";
+  calcularBtnMensura.style.display = "none";
+  tablaResultadosMensura.style.display = "block";
+  recalcularBtnMensura.style.display = "block";
   mostrarTotalMensura();
 });
+
+/*Botón de limpiar */
 
 const limpiarBtnMensura = document.getElementById("limpiar-btnMensura");
 limpiarBtnMensura.addEventListener("click", () => {
@@ -187,11 +203,14 @@ limpiarBtnMensura.addEventListener("click", () => {
 const recalcularBtnMensura = document.getElementById("recalcular-btnMensura");
 recalcularBtnMensura.addEventListener("click", () => {
   resultadosMensura.innerHTML = "";
-  container_resultadosMensura.style.display = "none";
+  tablaResultadosMensura.style.display = "none";
+  recalcularBtnMensura.style.display = "none";
   formularioMensura.style.display = "block";
+  limpiarBtnMensura.style.display = "block";
+  calcularBtnMensura.style.display = "block";
 });
 
-/* Seccion de Valuaciones */
+/* Sección de Valuaciones */
 
 function obtenerValoresEntradaValuaciones() {
   const ddjj =
@@ -209,7 +228,22 @@ function obtenerValoresEntradaValuaciones() {
   return { ddjj, valorFiscal, valuacionFiscal, ganadera, vir, preferencial };
 }
 
-function calcularPreferencialValuaciones(
+function calcularValuaciones(valoresEntrada) {
+  const { ddjj, valorFiscal, valuacionFiscal, ganadera, vir, preferencial } =
+    valoresEntrada;
+  let total =
+    valor_modulo_ddjj * ddjj +
+    valor_modulo_valor_fiscal * valorFiscal +
+    valor_modulo_valuacion_fiscal * valuacionFiscal +
+    valor_modulo_ganadera * ganadera +
+    valor_modulo_vir * vir;
+
+  if (preferencial) total *= 1 + porc_preferencial / 100;
+
+  return total;
+}
+
+function preferencialValuaciones(
   ddjj,
   valorFiscal,
   valuacionFiscal,
@@ -226,40 +260,43 @@ function calcularPreferencialValuaciones(
   return (total * porc_preferencial) / 100;
 }
 
-function calcularTotalValuacion(valoresEntrada) {
-  const { ddjj, valorFiscal, valuacionFiscal, ganadera, vir, preferencial } =
-    valoresEntrada;
-
-  let total =
-    valor_modulo_ddjj * ddjj +
-    valor_modulo_valor_fiscal * valorFiscal +
-    valor_modulo_valuacion_fiscal * valuacionFiscal +
-    valor_modulo_ganadera * ganadera +
-    valor_modulo_vir * vir;
-
-  if (preferencial) total *= 1 + porc_preferencial / 100;
-
-  return total;
-}
-
 function crearTablaResultadosValuaciones(valoresEntrada) {
   const { ddjj, valorFiscal, valuacionFiscal, ganadera, vir, preferencial } =
     valoresEntrada;
 
-  agregarFila("Declaraciones Juradas", ddjj, resultadosValuaciones);
-  agregarFila("Valores Fiscales", valorFiscal, resultadosValuaciones);
-  agregarFila("Reconsideración", valuacionFiscal, resultadosValuaciones);
-  agregarFila("Receptividad Ganadera", ganadera, resultadosValuaciones);
-  agregarFila("Reconsideración de Vir", vir, resultadosValuaciones);
+  agregarFila(
+    "Declaraciones Juradas",
+    ddjj,
+    valor_modulo_ddjj,
+    resultadosValuaciones
+  );
+  agregarFila(
+    "Valores Fiscales",
+    valorFiscal,
+    valor_modulo_valor_fiscal,
+    resultadosValuaciones
+  );
+  agregarFila(
+    "Reconsideración",
+    valuacionFiscal,
+    valor_modulo_valuacion_fiscal,
+    resultadosValuaciones
+  );
+  agregarFila(
+    "Receptividad Ganadera",
+    ganadera,
+    valor_modulo_ganadera,
+    resultadosValuaciones
+  );
+  agregarFila(
+    "Reconsideración de Vir",
+    vir,
+    valor_modulo_vir,
+    resultadosValuaciones
+  );
 
   const montoPreferencial = preferencial
-    ? calcularPreferencialValuaciones(
-        ddjj,
-        valorFiscal,
-        valuacionFiscal,
-        ganadera,
-        vir
-      )
+    ? preferencialValuaciones(ddjj, valorFiscal, valuacionFiscal, ganadera, vir)
     : 0;
 
   agregarFilaPreferencial(
@@ -271,18 +308,21 @@ function crearTablaResultadosValuaciones(valoresEntrada) {
 
 function mostrarTotalValuaciones() {
   const valoresEntrada = obtenerValoresEntradaValuaciones();
-  const total = calcularTotalValuacion(valoresEntrada);
+  const total = calcularValuaciones(valoresEntrada);
   crearTablaResultadosValuaciones(valoresEntrada);
   visualizarTotal(total, "abonarValuacion");
 }
 
-/*Botones Valuaciones */
+/*Botón cálcular valuaciones */
 const calcularBtnValuaciones = document.getElementById(
   "calcularBtn-valuaciones"
 );
 calcularBtnValuaciones.addEventListener("click", () => {
   formularioValuaciones.style.display = "none";
-  container_resultadosValuaciones.style.display = "block";
+  calcularBtnValuaciones.style.display = "none";
+  limpiarBtnValuaciones.style.display = "none";
+  tablaValuaciones.style.display = "block";
+  recalcularBtnValuaciones.style.display = "block";
   mostrarTotalValuaciones();
 });
 
@@ -308,6 +348,9 @@ const recalcularBtnValuaciones = document.getElementById(
 );
 recalcularBtnValuaciones.addEventListener("click", () => {
   resultadosValuaciones.innerHTML = "";
-  containerResultados_valuaciones.style.display = "none";
+  tablaValuaciones.style.display = "none";
+  recalcularBtnValuaciones.style.display = "none";
   formularioValuaciones.style.display = "block";
+  calcularBtnValuaciones.style.display = "block";
+  limpiarBtnValuaciones.style.display = "block";
 });

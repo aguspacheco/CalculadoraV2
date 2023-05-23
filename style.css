@@ -1,53 +1,86 @@
-.btn {
-  width: 150px;
-  padding: 10px;
-  border: none;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  cursor: pointer;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.elemento {
-  padding-bottom: 5px;
-}
-
-.elemento input[type="checkbox"] {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 5px;
-}
-
-label {
-  display: inline-block;
-  width: 150px;
-  text-align: left;
-}
-
-input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-}
-
-input[type="number"] {
-  padding-left: 10px;
-}
-
-.total {
-  display: flex;
-  justify-content: space-around;
-  background-color: #bcbcbc;
+.section {
   margin-bottom: 5px;
 }
 
-td {
-  text-align: center;
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 1px;
+  margin-bottom: 10px;
 }
 
-.container-resultados {
-  display: none;
+.elemento label {
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.texto-izquierda {
+.elemento input[type="number"] {
+  padding: 2px;
+  border: 1px solid black;
+  border-radius: 2px;
+  font-size: 15px;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.calcular-btn {
+  background-color: forestgreen;
+  color: beige;
+}
+
+.limpiar-btn,
+.recalcular-btn {
+  background-color: grey;
+  color: whitesmoke;
+  margin-left: 30px;
+}
+
+.tabla {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+  padding: 8px;
   text-align: left;
+  border-bottom: 1px solid gray;
+}
+
+.total {
+  margin-top: 10px;
+}
+
+.total label {
+  font-weight: bolder;
+  background-color: burlywood;
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.total div {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.valuaciones {
+  display: none;
 }
