@@ -9,9 +9,12 @@ const modulos = [
   { rango: [51, Infinity], valor: 500 },
 ];
 
-/* Defino constantes Valuaciones */
+/* Defino constantes de modulos */
 const valor_modulo_ddjj = 200 * multiplicador;
 const valor_modulo_ufuncional = 500 * multiplicador;
+const valor_modulo_cementerio = 100 * multiplicador;
+const valor_modulo_parcelario = 1500 * multiplicador;
+const valor_modulo_estudio = 700 * multiplicador;
 const valor_modulo_vir = 700 * multiplicador;
 const valor_modulo_valor_fiscal = 600 * multiplicador;
 const valor_modulo_valuacion_fiscal = 500 * multiplicador;
@@ -46,6 +49,7 @@ function formatoMoneda(monto) {
 /**
  * Visualiza el total a pagar en la página
  * @param {Number} total - El total a pagar
+ * @param {number} abonar - Contenedor del total
  */
 function visualizarTotal(total, abonar) {
   const contenedor = document.getElementById("abonar");
@@ -104,11 +108,25 @@ function obtenerValoresEntrada() {
   const origen = parseInt(document.getElementById("origen").value) || 0;
   const resultante = parseInt(document.getElementById("resultante").value) || 0;
   const ddjj = parseInt(document.getElementById("ddjj").value) || 0;
+  const estudio = parseInt(document.getElementById("estudio").value) || 0;
   const funcional = parseInt(document.getElementById("ufuncional").value) || 0;
+  const cementerio = parseInt(document.getElementById("cementerio").value) || 0;
+  const parcelario =
+    parseInt(document.getElementById("estadoParcelario").value) || 0;
   const preferencial = document.getElementById("preferencialMensura").checked;
   const parcelas = origen + resultante;
 
-  return { origen, resultante, ddjj, funcional, preferencial, parcelas };
+  return {
+    origen,
+    resultante,
+    ddjj,
+    estudio,
+    funcional,
+    cementerio,
+    parcelario,
+    preferencial,
+    parcelas,
+  };
 }
 
 /**
@@ -116,16 +134,41 @@ function obtenerValoresEntrada() {
  * @param {Object} valoresEntrada - Un objeto con los valores de entrada ingresados por el usuario
  * @returns {Number} - El total a pagar en base a los valores de entrada ingresados por el usuario
  */
-function calcularTotal({ parcelas, ddjj, preferencial, funcional }) {
-  let total = ddjj * valor_modulo_ddjj + funcional * valor_modulo_ufuncional;
+function calcularTotal({
+  parcelas,
+  ddjj,
+  preferencial,
+  funcional,
+  cementerio,
+  estudio,
+  estadoParcelario,
+}) {
+  let total =
+    ddjj * valor_modulo_ddjj +
+    funcional * valor_modulo_ufuncional +
+    cementerio * valor_modulo_cementerio +
+    estadoParcelario * valor_modulo_parcelario +
+    estudio * valor_modulo_estudio;
   if (parcelas != 0) total += parcelasValorModular(parcelas) * parcelas;
   if (preferencial) total *= 1 + porc_preferencial / 100;
 
   return total;
 }
 
-function totalPreferencial(parcelas, ddjj, funcional) {
-  let total = ddjj * valor_modulo_ddjj + funcional * valor_modulo_ufuncional;
+function totalPreferencial(
+  parcelas,
+  ddjj,
+  funcional,
+  cementerio,
+  estudio,
+  parcelario
+) {
+  let total =
+    ddjj * valor_modulo_ddjj +
+    funcional * valor_modulo_ufuncional +
+    cementerio * valor_modulo_cementerio +
+    parcelario * valor_modulo_parcelario +
+    estudio * valor_modulo_estudio;
   if (parcelas != 0) total += parcelasValorModular(parcelas) * parcelas;
   return (total * porc_preferencial) / 100;
 }
@@ -137,8 +180,17 @@ function totalPreferencial(parcelas, ddjj, funcional) {
  * @param {object} valoresEntrada - Objeto con los valores de entrada del formulario.
  */
 function crearTablaResultados(valoresEntrada) {
-  const { origen, resultante, ddjj, funcional, preferencial, parcelas } =
-    valoresEntrada;
+  const {
+    origen,
+    resultante,
+    ddjj,
+    funcional,
+    cementerio,
+    parcelario,
+    estudio,
+    preferencial,
+    parcelas,
+  } = valoresEntrada;
   const valor_modulo_parcelas = parcelasValorModular(parcelas);
 
   agregarFila(
@@ -159,10 +211,35 @@ function crearTablaResultados(valoresEntrada) {
     valor_modulo_ufuncional,
     resultadosMensura
   );
+  agregarFila(
+    "Cementerio",
+    cementerio,
+    valor_modulo_cementerio,
+    resultadosMensura
+  );
+  agregarFila(
+    "estudio de titulo y antecedente dominal",
+    estudio,
+    valor_modulo_estudio,
+    resultadosMensura
+  );
+  agregarFila(
+    "Estado parcelario",
+    parcelario,
+    valor_modulo_parcelario,
+    resultadosMensura
+  );
   agregarFila("Declaracion Jurada", ddjj, valor_modulo_ddjj, resultadosMensura);
 
   const montoPreferencial = preferencial
-    ? totalPreferencial(parcelas, ddjj, funcional)
+    ? totalPreferencial(
+        parcelas,
+        ddjj,
+        funcional,
+        cementerio,
+        parcelario,
+        estudio
+      )
     : 0;
 
   agregarFilaPreferencial(preferencial, montoPreferencial, resultadosMensura);
@@ -181,9 +258,9 @@ const calcularBtnMensura = document.getElementById("calcular-btnMensura");
 calcularBtnMensura.addEventListener("click", () => {
   formularioMensura.style.display = "none";
   limpiarBtnMensura.style.display = "none";
-  calcularBtnMensura.style.display = "none";
-  tablaResultadosMensura.style.display = "block";
-  recalcularBtnMensura.style.display = "block";
+  recalcularBtnMensura.style.display = "none";
+  tablaMensura.style.display = "block";
+  recalcularBtnMensura.style.display = "inline-block";
   mostrarTotalMensura();
 });
 
@@ -191,7 +268,15 @@ calcularBtnMensura.addEventListener("click", () => {
 
 const limpiarBtnMensura = document.getElementById("limpiar-btnMensura");
 limpiarBtnMensura.addEventListener("click", () => {
-  const elementos = ["origen", "resultante", "ddjj", "ufuncional"];
+  const elementos = [
+    "origen",
+    "resultante",
+    "ddjj",
+    "ufuncional",
+    "cementerio",
+    "estadoParcelario",
+    "estudioTitulo",
+  ];
 
   elementos.forEach((elemento) => {
     document.getElementById(elemento).value = "";
@@ -205,9 +290,9 @@ recalcularBtnMensura.addEventListener("click", () => {
   resultadosMensura.innerHTML = "";
   tablaResultadosMensura.style.display = "none";
   recalcularBtnMensura.style.display = "none";
-  formularioMensura.style.display = "block";
-  limpiarBtnMensura.style.display = "block";
-  calcularBtnMensura.style.display = "block";
+  formularioMensura.style.display = "flex";
+  limpiarBtnMensura.style.display = "inline-block";
+  recalcularBtnMensura.style.display = "inline-block";
 });
 
 /* Sección de Valuaciones */
@@ -351,6 +436,6 @@ recalcularBtnValuaciones.addEventListener("click", () => {
   tablaValuaciones.style.display = "none";
   recalcularBtnValuaciones.style.display = "none";
   formularioValuaciones.style.display = "block";
-  calcularBtnValuaciones.style.display = "block";
-  limpiarBtnValuaciones.style.display = "block";
+  calcularBtnValuaciones.style.display = "inline-block";
+  limpiarBtnValuaciones.style.display = "inline-block";
 });
