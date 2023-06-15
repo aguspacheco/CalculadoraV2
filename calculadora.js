@@ -49,11 +49,10 @@ function formatoMoneda(monto) {
 /**
  * Visualiza el total a pagar en la página
  * @param {Number} total - El total a pagar
- * @param {number} abonar - Contenedor del total
+ * @param {Number} abonar - Contenedor del total
  */
 function visualizarTotal(total, abonar) {
-  const contenedor = document.getElementById("abonar");
-  contenedor.innerHTML = "";
+  const contenedor = document.getElementById(abonar);
   contenedor.innerText = formatoMoneda(total);
 }
 
@@ -115,7 +114,6 @@ function obtenerValoresEntrada() {
     parseInt(document.getElementById("estadoParcelario").value) || 0;
   const preferencial = document.getElementById("preferencialMensura").checked;
   const parcelas = origen + resultante;
-
   return {
     origen,
     resultante,
@@ -141,17 +139,24 @@ function calcularTotal({
   funcional,
   cementerio,
   estudio,
-  estadoParcelario,
+  parcelario,
 }) {
   let total =
     ddjj * valor_modulo_ddjj +
     funcional * valor_modulo_ufuncional +
     cementerio * valor_modulo_cementerio +
-    estadoParcelario * valor_modulo_parcelario +
+    parcelario * valor_modulo_parcelario +
     estudio * valor_modulo_estudio;
+  console.log(parcelario);
+  total +=
+    cementerio *
+    valor_modulo_cementerio *
+    parcelas *
+    funcional *
+    valor_modulo_ufuncional;
   if (parcelas != 0) total += parcelasValorModular(parcelas) * parcelas;
   if (preferencial) total *= 1 + porc_preferencial / 100;
-
+  console.log(total);
   return total;
 }
 
@@ -218,13 +223,13 @@ function crearTablaResultados(valoresEntrada) {
     resultadosMensura
   );
   agregarFila(
-    "estudio de titulo y antecedente dominal",
+    "Estudio de Titulo y Antecedente Dominal",
     estudio,
     valor_modulo_estudio,
     resultadosMensura
   );
   agregarFila(
-    "Estado parcelario",
+    "Verificación Estado parcelario",
     parcelario,
     valor_modulo_parcelario,
     resultadosMensura
@@ -257,17 +262,17 @@ function mostrarTotalMensura() {
 const calcularBtnMensura = document.getElementById("calcular-btnMensura");
 calcularBtnMensura.addEventListener("click", () => {
   formularioMensura.style.display = "none";
-  limpiarBtnMensura.style.display = "none";
+  borrarBtnMensura.style.display = "none";
   recalcularBtnMensura.style.display = "none";
   tablaMensura.style.display = "block";
   recalcularBtnMensura.style.display = "inline-block";
   mostrarTotalMensura();
 });
 
-/*Botón de limpiar */
+/*Botón de borrar */
 
-const limpiarBtnMensura = document.getElementById("limpiar-btnMensura");
-limpiarBtnMensura.addEventListener("click", () => {
+const borrarBtnMensura = document.getElementById("borrar-btnMensura");
+borrarBtnMensura.addEventListener("click", () => {
   const elementos = [
     "origen",
     "resultante",
@@ -275,7 +280,8 @@ limpiarBtnMensura.addEventListener("click", () => {
     "ufuncional",
     "cementerio",
     "estadoParcelario",
-    "estudioTitulo",
+    "estudio",
+    "preferencialMensura",
   ];
 
   elementos.forEach((elemento) => {
@@ -291,7 +297,7 @@ recalcularBtnMensura.addEventListener("click", () => {
   tablaResultadosMensura.style.display = "none";
   recalcularBtnMensura.style.display = "none";
   formularioMensura.style.display = "flex";
-  limpiarBtnMensura.style.display = "inline-block";
+  borrarBtnMensura.style.display = "inline-block";
   recalcularBtnMensura.style.display = "inline-block";
 });
 
@@ -395,7 +401,7 @@ function mostrarTotalValuaciones() {
   const valoresEntrada = obtenerValoresEntradaValuaciones();
   const total = calcularValuaciones(valoresEntrada);
   crearTablaResultadosValuaciones(valoresEntrada);
-  visualizarTotal(total, "abonarValuacion");
+  visualizarTotal(total, "abonarValuaciones");
 }
 
 /*Botón cálcular valuaciones */
@@ -405,14 +411,14 @@ const calcularBtnValuaciones = document.getElementById(
 calcularBtnValuaciones.addEventListener("click", () => {
   formularioValuaciones.style.display = "none";
   calcularBtnValuaciones.style.display = "none";
-  limpiarBtnValuaciones.style.display = "none";
+  borrarBtnValuaciones.style.display = "none";
   tablaValuaciones.style.display = "block";
   recalcularBtnValuaciones.style.display = "block";
   mostrarTotalValuaciones();
 });
 
-const limpiarBtnValuaciones = document.getElementById("limpiarBtn-valuaciones");
-limpiarBtnValuaciones.addEventListener("click", () => {
+const borrarBtnValuaciones = document.getElementById("borrarBtn-valuaciones");
+borrarBtnValuaciones.addEventListener("click", () => {
   const elementos = [
     "declaracionesJuradas",
     "valoresFiscales",
@@ -437,5 +443,5 @@ recalcularBtnValuaciones.addEventListener("click", () => {
   recalcularBtnValuaciones.style.display = "none";
   formularioValuaciones.style.display = "block";
   calcularBtnValuaciones.style.display = "inline-block";
-  limpiarBtnValuaciones.style.display = "inline-block";
+  borrarBtnValuaciones.style.display = "inline-block";
 });
