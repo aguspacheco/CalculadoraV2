@@ -84,6 +84,28 @@ function agregarFilaPreferencial(preferencial, monto, tabla) {
   tabla.appendChild(fila);
 }
 
+function abrirVentanaMensura() {
+  var ventanaEmergente = document.getElementById("miVentana");
+  ventanaEmergente.style.display = "block";
+}
+
+function abrirVentanaValuaciones() {
+  var ventanaEmergente = document.getElementById("ventanaValuaciones");
+  ventanaEmergente.style.display = "block";
+}
+
+function cerrarVentana() {
+  var ventanaEmergente = document.getElementById("miVentana");
+  ventanaEmergente.style.display = "none";
+  resultadosMensura.innerHTML = "";
+  tablaResultadosMensura.style.display = "none";
+  recalcularBtnMensura.style.display = "none";
+  formularioMensura.style.display = "flex";
+  borrarBtnMensura.style.display = "inline-block";
+  recalcularBtnMensura.style.display = "inline-block";
+  formularioValuaciones.style.display = "block";
+}
+
 /* Seccion Mensura */
 
 /**
@@ -147,7 +169,6 @@ function calcularTotal({
     cementerio * valor_modulo_cementerio +
     parcelario * valor_modulo_parcelario +
     estudio * valor_modulo_estudio;
-  console.log(parcelario);
   total +=
     cementerio *
     valor_modulo_cementerio *
@@ -156,7 +177,6 @@ function calcularTotal({
     valor_modulo_ufuncional;
   if (parcelas != 0) total += parcelasValorModular(parcelas) * parcelas;
   if (preferencial) total *= 1 + porc_preferencial / 100;
-  console.log(total);
   return total;
 }
 
@@ -261,6 +281,8 @@ function mostrarTotalMensura() {
 
 const calcularBtnMensura = document.getElementById("calcular-btnMensura");
 calcularBtnMensura.addEventListener("click", () => {
+  abrirVentanaMensura();
+  formularioValuaciones.style.display = "none";
   formularioMensura.style.display = "none";
   borrarBtnMensura.style.display = "none";
   recalcularBtnMensura.style.display = "none";
@@ -299,6 +321,7 @@ recalcularBtnMensura.addEventListener("click", () => {
   formularioMensura.style.display = "flex";
   borrarBtnMensura.style.display = "inline-block";
   recalcularBtnMensura.style.display = "inline-block";
+  formularioValuaciones.style.display = "block";
 });
 
 /* Sección de Valuaciones */
@@ -409,11 +432,13 @@ const calcularBtnValuaciones = document.getElementById(
   "calcularBtn-valuaciones"
 );
 calcularBtnValuaciones.addEventListener("click", () => {
+  abrirVentanaValuaciones();
+  formularioMensura.style.display = "none";
   formularioValuaciones.style.display = "none";
   calcularBtnValuaciones.style.display = "none";
   borrarBtnValuaciones.style.display = "none";
   tablaValuaciones.style.display = "block";
-  recalcularBtnValuaciones.style.display = "block";
+  recalcularBtnValuaciones.style.display = "inline-block";
   mostrarTotalValuaciones();
 });
 
@@ -439,6 +464,7 @@ const recalcularBtnValuaciones = document.getElementById(
 );
 recalcularBtnValuaciones.addEventListener("click", () => {
   resultadosValuaciones.innerHTML = "";
+  formularioMensura.style.display = "block";
   tablaValuaciones.style.display = "none";
   recalcularBtnValuaciones.style.display = "none";
   formularioValuaciones.style.display = "block";

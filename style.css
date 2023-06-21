@@ -80,7 +80,7 @@ button :active {
 }
 
 .tabla {
-  width: 50%;
+  width: 180%;
   border-collapse: collapse;
   font-family: Arial;
   background-color: #4742425b;
@@ -94,9 +94,9 @@ thead {
 
 .tabla th,
 .tabla td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid gray;
+  padding: 3px;
+  text-align: center;
+  border-bottom: 2px solid gray;
 }
 
 tr:nth-child(even) {
@@ -106,11 +106,29 @@ tr:nth-child(even) {
 .total {
   display: flex;
   justify-content: space-between;
-  width: 50%;
-  margin-right: 5px;
+  width: 180%;
+  margin-right: 8px;
   background-color: rgb(50, 59, 66);
-  font-family: Arial;
+  font-family: "Franklin Gothic Medium";
   color: #ccc;
+}
+
+.ventana-emergente {
+  display: none;
+  position: fixed;
+  top: 40;
+  left: 250;
+  width: 40%;
+  height: 80%;
+}
+
+.contenido-ventana {
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  transform: translate(-30%, -30%);
 }
 
 .containerResultados {

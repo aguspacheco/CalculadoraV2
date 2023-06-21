@@ -8,123 +8,127 @@
     <script defer src="/calculadora.js"></script>
   </head>
   <body>
-    <div class="parent">
+    <class="parent">
       <section class="mensura">
-        <form class="formulario" id="formularioMensura">
-          <div class="elemento">
-            <label for="origen">Parcelas origen *</label>
-            <input type="number" id="origen" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="resultante">Parcelas resultante *</label>
-            <input type="number" id="resultante" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="ufuncional">Unidad Funcional</label>
-            <input type="number" id="ufuncional" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="ddjj">Declaración jurada</label>
-            <input type="number" id="ddjj" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="cementerio">Derecho real cementerio</label>
-            <input type="number" id="cementerio" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="estadoParcelario">Verificación Estado Parcelario</label>
-            <input type="number" id="estadoParcelario" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="estudio">Estudio de titulo y antecedente dominal</label>
-            <input type="number" id="estudio" min="0" required />
-          </div>
-
-          <div class="elemento">
-            <label for="preferencial">Preferencial</label>
-            <input type="checkbox" id="preferencialMensura" />
-          </div>
-          <div>
-            <button
-              class="calcular-btn btn"
-              id="calcular-btnMensura"
-              type="button"
-            >
-              Calcular
-            </button>
-            <button class="borrar-btn btn" id="borrar-btnMensura" type="button">
-              Borrar
-            </button>
-          </div>
-        </form>
-        <div class="containerResultados" id="tablaMensura">
-          <table class="tabla">
-            <thead>
-              <tr>
-                <th>Datos Ingresados</th>
-                <th>Cantidad</th>
-                <th>Valor</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody class="resultados" id="resultadosMensura"></tbody>
-          </table>
-          <div class="total" id="totalMensura">
-            <label for="resultado">Total A pagar:</label>
-            <div id="abonarMensura"></div>
-          </div>
-          <div>
-            <button
-              class="recalcular-btn btn"
-              id="recalcular-btnMensura"
-              type="button"
-            >
-              Recalcular
-            </button>
-          </div>
-        </div>
+            <form class="formulario" id="formularioMensura">
+              <div class="elemento">
+                <label for="origen">Parcelas origen *</label>
+                <input type="number" id="origen" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="resultante">Parcelas resultante *</label>
+                <input type="number" id="resultante" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="ufuncional">Unidad Funcional</label>
+                <input type="number" id="ufuncional" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="ddjj">Declaración jurada</label>
+                <input type="number" id="ddjj" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="cementerio">Derecho real cementerio</label>
+                <input type="number" id="cementerio" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="estadoParcelario">Verificación Estado Parcelario</label>
+                <input type="number" id="estadoParcelario" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="estudio">Estudio de titulo y antecedente dominal</label>
+                <input type="number" id="estudio" min="0" required />
+              </div>
+    
+              <div class="elemento">
+                <label for="preferencial">Preferencial</label>
+                <input type="checkbox" id="preferencialMensura" />
+              </div>
+              <div>
+                <button
+                  class="calcular-btn btn"
+                  id="calcular-btnMensura"
+                  type="button"
+                >
+                  Calcular
+                </button>
+                <button class="borrar-btn btn" id="borrar-btnMensura" type="button">
+                  Borrar
+                </button>
+              </div>
+            </form>
+              <div class="ventana-emergente" id="miVentana">
+                <div class="contenido-ventana">
+                  <div class="containerResultados" id="tablaMensura">
+                    <table class="tabla">
+                      <thead>
+                        <tr>
+                          <th>Datos Ingresados</th>
+                          <th>Cantidad</th>
+                          <th>Valor</t>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody class="resultados" id="resultadosMensura"></tbody>
+                    </table>
+                      <div class="total" id="totalMensura">
+                        <label for="resultado">Total A pagar:</label>
+                          <div id="abonarMensura"></div>
+                      </div>
+                        <div>
+                         <button
+                          class="recalcular-btn btn"
+                          id="recalcular-btnMensura"
+                          type="button"
+                          >
+                          Recalcular
+                          </button>
+                        </div>
+                  </div>
+                </div>
+              </div>
       </section>
+    
       <section class="valuaciones">
         <form class="formulario" id="formularioValuaciones">
           <div class="elemento">
-            <label for="declaracionesJuradas">Declaración Jurada *</label>
+            <label for="declaracionesJuradas">Declaración Jurada</label>
             <input type="number" id="declaracionesJuradas" min="0" required />
           </div>
 
           <div class="elemento">
             <label for="valoresFiscales">
-              Certificado de valores fiscales*</label
+              Certificado de valores fiscales</label
             >
             <input type="number" id="valoresFiscales" min="0" required />
           </div>
 
           <div class="elemento">
             <label for="pedidoValoresFiscales">
-              Reconsideración valores fiscales*</label
+              Reconsideración valores fiscales</label
             >
             <input type="number" id="pedidoValoresFiscales" min="0" required />
           </div>
 
           <div class="elemento">
             <label for="ganadera">
-              Reconsideración receptividad ganadera
-            </label>
+              Reconsideración receptividad ganadera</label>
             <input type="number" id="ganadera" min="0" required />
           </div>
 
           <div class="elemento">
-            <label for="vir"> Reconsideración VIR </label>
+            <label for="vir"> Reconsideración VIR</label>
             <input type="number" id="vir" min="0" required />
           </div>
 
           <div class="elemento">
-            <label for="preferencial_valuaciones"> Preferencial </label>
+            <label for="preferencial_valuaciones"> Preferencial</label>
             <input type="checkbox" id="preferencialValuaciones" />
           </div>
 
@@ -146,34 +150,36 @@
             </button>
           </div>
         </form>
-
-        <div class="container-resultados" id="tablaValuaciones">
-          <table class="tabla">
-            <thead>
-              <tr>
-                <th>Datos</th>
-                <th>Cantidad</th>
-                <th>Valor</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody class="resultados" id="resultadosValuaciones"></tbody>
-          </table>
-          <div class="total">
-            <label for="abonarValuaciones"> Total a pagar:</label>
-            <div id="abonarValuaciones"></div>
-          </div>
-          <div>
-            <button
-              class="recalcular-btn btn"
-              id="recalcularBtn-valuaciones"
-              type="button"
-            >
-              Recalcular
-            </button>
+        <div class="ventana-emergente" id="ventanaValuaciones">
+          <div class="contenido-ventana">
+            <div class="container-resultados" id="tablaValuaciones">
+                <table class="tabla">
+                  <thead>
+                    <tr>
+                      <th>Datos</th>
+                      <th>Cantidad</th>
+                      <th>Valor</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody class="resultados" id="resultadosValuaciones"></tbody>
+                </table>
+                  <div class="total">
+                    <label for="abonarValuaciones"> Total a pagar:</label>
+                     <div id="abonarValuaciones"></div>
+                  </div>
+                  <div>
+                    <button
+                      class="recalcular-btn btn"
+                      id="recalcularBtn-valuaciones"
+                      type="button"
+                    >
+                     Recalcular
+                    </button>
+                  </div>
+            </div>
           </div>
         </div>
       </section>
-    </div>
   </body>
 </html>
