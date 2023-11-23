@@ -134,8 +134,24 @@ function obtenerValoresEntrada() {
   const cementerio = parseInt(document.getElementById("cementerio").value) || 0;
   const parcelario =
     parseInt(document.getElementById("estadoParcelario").value) || 0;
+  if (
+    origen < 0 ||
+    resultante < 0 ||
+    ddjj < 0 ||
+    estudio < 0 ||
+    funcional < 0 ||
+    cementerio < 0 ||
+    parcelario < 0
+  ) {
+    alert(
+      "Por favor, ingrese valores mayores a cero en todos los campos numéricos."
+    );
+    return null;
+  }
+
   const preferencial = document.getElementById("preferencialMensura").checked;
   const parcelas = origen + resultante;
+
   return {
     origen,
     resultante,
@@ -278,9 +294,21 @@ function mostrarTotalMensura() {
 }
 
 /* Botón de calcular */
-
 const calcularBtnMensura = document.getElementById("calcular-btnMensura");
 calcularBtnMensura.addEventListener("click", () => {
+  abrirVentanaMensura();
+  const valoresEntrada = obtenerValoresEntrada();
+
+  if (valoresEntrada === null) {
+    return;
+  }
+
+  // Verificar si hay algún valor menor a cero
+  if (valoresEntrada === null) {
+    // Si hay un valor menor a cero, no continuar
+    return;
+  }
+
   abrirVentanaMensura();
   formularioValuaciones.style.display = "none";
   formularioMensura.style.display = "none";
@@ -288,6 +316,7 @@ calcularBtnMensura.addEventListener("click", () => {
   recalcularBtnMensura.style.display = "none";
   tablaMensura.style.display = "block";
   recalcularBtnMensura.style.display = "inline-block";
+
   mostrarTotalMensura();
 });
 
@@ -338,6 +367,19 @@ function obtenerValoresEntradaValuaciones() {
   const preferencial = document.getElementById(
     "preferencialValuaciones"
   ).checked;
+
+  if (
+    ddjj < 0 ||
+    valorFiscal < 0 ||
+    valuacionFiscal < 0 ||
+    ganadera < 0 ||
+    vir < 0
+  ) {
+    alert(
+      "Por favor, ingrese valores mayores a cero en todos los campos numéricos."
+    );
+    return null;
+  }
 
   return { ddjj, valorFiscal, valuacionFiscal, ganadera, vir, preferencial };
 }
@@ -432,6 +474,12 @@ const calcularBtnValuaciones = document.getElementById(
   "calcularBtn-valuaciones"
 );
 calcularBtnValuaciones.addEventListener("click", () => {
+  const valoresEntradaValuaciones = obtenerValoresEntradaValuaciones();
+
+  if (valoresEntradaValuaciones === null) {
+    return;
+  }
+
   abrirVentanaValuaciones();
   formularioMensura.style.display = "none";
   formularioValuaciones.style.display = "none";
@@ -439,6 +487,7 @@ calcularBtnValuaciones.addEventListener("click", () => {
   borrarBtnValuaciones.style.display = "none";
   tablaValuaciones.style.display = "block";
   recalcularBtnValuaciones.style.display = "inline-block";
+
   mostrarTotalValuaciones();
 });
 
